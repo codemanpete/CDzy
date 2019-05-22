@@ -4,15 +4,15 @@ import isEmpty from 'is-empty';
 const validateRegisterInput = function (data) {
     let errors = {};
 
-    data.name = !isEmpty(data.name) ? data.name : "";
+    data.username = !isEmpty(data.username) ? data.username : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password1 = !isEmpty(data.password1) ? data.password1 : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
     // validator.isEmpty is different from isEmpty
     // validator.isEmpty checks if string has length 0.
-    if (validator.isEmpty(data.name)) {
-        errors.name = "Name field is required";
+    if (validator.isEmpty(data.username)) {
+        errors.username = "Username field is required";
     }
 
     if (validator.isEmpty(data.email)) {
