@@ -3,8 +3,7 @@ import express, {
 } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
-// something about keys?
+import keys from '../../config/keys';
 
 import validateRegistrationInput from '../../validation/registration';
 import validateLoginInput from '../../validation/login';
@@ -16,6 +15,7 @@ Router.post('/registration', function (req, res) {
         errors,
         isValid
     } = validateRegistrationInput(req.body);
+
     if (!isValid) {
         return res.status(400).json(errors);
     }
@@ -39,3 +39,58 @@ Router.post('/registration', function (req, res) {
         });
     });
 });
+
+Router.post('/login', (req, res) => {
+    const {
+        errors,
+        isValid
+    } = validateLoginInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    const {
+        email,
+        password
+    } = req.body;
+
+    User.findOne({
+        email
+    }).then(user => {
+        if (!user) {
+            return res.status(404).json({
+                error: "User not found"
+            });
+        }
+
+        bcrypt.compare(password, user.password)
+            .then(isMatch => {
+                if (isMatch) {
+                    const payload = {
+                        id: user.id,
+                        username: user.username
+                    };
+
+                    jwt.sign(
+                        payload,
+                        keys.secretOrKey, {
+                            expiresIn: 300000
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: "Bearer " + token
+                            });
+                        }
+                    );
+                } else {
+                    return res.status(400).json({
+                        error: "password or username incorrect"
+                    });
+                }
+            });
+    });
+});
+
+export default Router;
