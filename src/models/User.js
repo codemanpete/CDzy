@@ -17,11 +17,11 @@ const UserSchema = new Schema({
     },
     dateCreated: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     lastSeen: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     }
 }, {
     collection: 'Users'

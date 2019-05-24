@@ -1,6 +1,4 @@
-import express, {
-    Router
-} from 'express';
+const Router = require('express').Router();
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import keys from '../../config/keys';
@@ -8,7 +6,7 @@ import keys from '../../config/keys';
 import validateRegistrationInput from '../../validation/registration';
 import validateLoginInput from '../../validation/login';
 
-import User from '../../modesl/User';
+import User from '../../models/User';
 
 Router.post('/registration', function (req, res) {
     const {
@@ -20,17 +18,17 @@ Router.post('/registration', function (req, res) {
         return res.status(400).json(errors);
     }
 
-    const newUser = newUser({
+    const newUser = new User({
         username: req.body.username,
         email: req.body.email,
         password: "",
-        dateCreated: Date.now,
-        lastSeen: Date.now
+        dateCreated: Date.now(),
+        lastSeen: Date.now()
     });
 
     bcrypt.genSalt(12, function (bcryptErr, salt) {
         if (bcryptErr) console.log("Error in bcrypt: " + bcryptErr);
-        bcrypt.hash(req.body.password, salt, function (hashErr, hash) {
+        bcrypt.hash(req.body.password1, salt, function (hashErr, hash) {
             if (hashErr) console.log("Error in bcrypt.hash(): " + hashErr);
             newUser.password = hash;
             newUser.save()
@@ -60,7 +58,7 @@ Router.post('/login', (req, res) => {
     }).then(user => {
         if (!user) {
             return res.status(404).json({
-                error: "User not found"
+                error: "password or username incorrect"
             });
         }
 

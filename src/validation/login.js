@@ -1,16 +1,14 @@
 import validator from 'validator';
-import isEmpty from 'is-empty';
 
 const validateLoginInput = function (data) {
     let errors = {};
 
-    data.email = !isEmpty(data.email) ? data.email : "";
-    data.password = data.password || ""; // see if this works
-    console.log("flag 1 for removal");
+    data.email = data.email || "";
+    data.password = data.password || "";
 
     if (validator.isEmpty(data.email)) {
         errors.email = "Email field is required";
-    } else if (validator.isEmail(data.email)) {
+    } else if (!validator.isEmail(data.email)) {
         errors.email = "Email is invalid";
     }
 
@@ -20,7 +18,7 @@ const validateLoginInput = function (data) {
 
     return {
         errors,
-        isValid: Object.keys(errors).length === 0 // see if this works
+        isValid: Object.keys(errors).length === 0
     };
 };
 

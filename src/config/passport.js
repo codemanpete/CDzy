@@ -1,5 +1,5 @@
 import {
-    JwtStrategy,
+    Strategy,
     ExtractJwt
 } from 'passport-jwt';
 import mongoose from 'mongoose';
@@ -13,7 +13,7 @@ const opts = {
 
 export default function (passport) {
     passport.use(
-        new JwtStrategy(opts, (jwtPayload, done) => {
+        new Strategy(opts, (jwtPayload, done) => {
             User.findById(jwtPayload.id)
                 .then(user => {
                     if (user) {
