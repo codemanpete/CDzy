@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navbar from './components/layouts/Navbar';
 import Landing from './components/layouts/Landing';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 class App extends Component {
   render() {
@@ -11,7 +13,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <Landing />
+          <Route exact path="/" component={Landing} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
         </div>
       </Router>
     );
