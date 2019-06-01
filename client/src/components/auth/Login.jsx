@@ -69,7 +69,7 @@ class Login extends Component {
                                     value={this.state.password}
                                     errors={errors.password}
                                     id="password"
-                                    tyep="password"
+                                    type="password"
                                 />
                                 <label htmlFor="password">Password</label>
                             </div>
