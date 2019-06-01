@@ -8,6 +8,13 @@ import {
     USER_LOADING
 } from './types';
 
+export const setCurrentUser = decodedUser => {
+    return {
+        type: SET_CURRENT_USER,
+        payload: decodedUser
+    };
+};
+
 // registers a user
 export const registerUser = (userData, history) => dispatch => {
     axios
@@ -37,13 +44,6 @@ export const loginUser = userData => dispatch => {
                 payload: err.response.data
             })
         );
-};
-
-export const setCurrentUser = decodedUser => {
-    return {
-        type: SET_CURRENT_USER,
-        payload: decodedUser
-    };
 };
 
 export const setUserLoading = () => {
