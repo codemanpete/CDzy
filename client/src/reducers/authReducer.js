@@ -1,7 +1,7 @@
 import {
     SET_CURRENT_USER,
     USER_LOADING
-} from '../actions/types';
+} from '../actions/authActions';
 
 import isEmpty from 'is-empty';
 

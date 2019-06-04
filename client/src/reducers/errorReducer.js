@@ -1,6 +1,6 @@
 import {
     GET_ERRORS
-} from '../actions/types';
+} from '../actions/authActions';
 
 const initialState = {};
 
