@@ -26,6 +26,32 @@ Router.post('/registration', function (req, res) {
         lastSeen: Date.now()
     });
 
+    User.findOne({
+            email: newUser.email
+        })
+        .then(user => {
+            if (user) {
+                return res.status(409).json({
+                    error: {
+                        email: "email already in use."
+                    }
+                });
+            }
+        });
+
+    User.findOne({
+            username: newUser.username
+        })
+        .then(user => {
+            if (user) {
+                return res.status(409).json({
+                    error: {
+                        username: "username already in use."
+                    }
+                });
+            }
+        });
+
     bcrypt.genSalt(12, function (bcryptErr, salt) {
         if (bcryptErr) console.log("Error in bcrypt: " + bcryptErr);
         bcrypt.hash(req.body.password1, salt, function (hashErr, hash) {
@@ -33,7 +59,9 @@ Router.post('/registration', function (req, res) {
             newUser.password = hash;
             newUser.save()
                 .then(user => res.json(user))
-                .catch(err => console.log(err));
+                .catch(err => {
+                    res.send(400).json(errors);
+                });
         });
     });
 });
