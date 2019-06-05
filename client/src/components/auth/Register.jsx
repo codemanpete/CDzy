@@ -12,8 +12,7 @@ class Register extends Component {
             username: "",
             email: "",
             password1: "",
-            password2: "",
-            errors: {}
+            password2: ""
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -52,8 +51,12 @@ class Register extends Component {
         this.props.registerUser(newUser, this.props.history);
     }
 
+    renderErrors() {
+
+    }
+
     render() {
-        const { errors } = this.state;
+        const { errors } = this.props;
         return (
             <div className="container">
                 <div className="row">

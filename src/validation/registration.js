@@ -2,7 +2,7 @@ import validator from 'validator';
 import isEmpty from 'is-empty';
 
 const validateRegisterInput = function (data) {
-    let errors = {};
+    let error = {};
 
     data.username = !isEmpty(data.username) ? data.username : "";
     data.email = !isEmpty(data.email) ? data.email : "";
@@ -12,37 +12,37 @@ const validateRegisterInput = function (data) {
     // validator.isEmpty is different from isEmpty
     // validator.isEmpty checks if string has length 0.
     if (validator.isEmpty(data.username)) {
-        errors.username = "Username field is required";
+        error.username = "Username field is required";
     }
 
     if (validator.isEmpty(data.email)) {
-        errors.email = "Email field is required";
+        error.email = "Email field is required";
     } else if (!validator.isEmail(data.email)) {
-        errors.email = "Email is invalid";
+        error.email = "Email is invalid";
     }
 
     if (validator.isEmpty(data.password1)) {
-        errors.password = "Password field is required";
+        error.password1 = "Password field is required";
     }
 
     if (validator.isEmpty(data.password2)) {
-        errors.password = "Confirm password field is required";
+        error.password2 = "Confirm password field is required";
     }
 
     if (!validator.isLength(data.password1, {
             min: 6,
             max: 100
         })) {
-        errors.password = "Password must be between 6-100 characters long";
+        error.password1 = "Password must be between 6-100 characters long";
     }
 
     if (!validator.equals(data.password1, data.password2)) {
-        errors.password = "Passwords must match";
+        error.password2 = "Passwords must match";
     }
 
     return {
-        errors,
-        isValid: isEmpty(errors)
+        error,
+        isValid: isEmpty(error)
     };
 
 };

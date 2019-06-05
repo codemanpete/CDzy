@@ -10,12 +10,14 @@ import User from '../../models/User';
 
 Router.post('/registration', function (req, res) {
     const {
-        errors,
+        error,
         isValid
     } = validateRegistrationInput(req.body);
 
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).json({
+            error
+        });
     }
 
     const newUser = new User({
@@ -31,7 +33,7 @@ Router.post('/registration', function (req, res) {
         })
         .then(user => {
             if (user) {
-                return res.status(409).json({
+                return res.status(400).json({
                     error: {
                         email: "email already in use."
                     }
@@ -44,7 +46,7 @@ Router.post('/registration', function (req, res) {
         })
         .then(user => {
             if (user) {
-                return res.status(409).json({
+                return res.status(400).json({
                     error: {
                         username: "username already in use."
                     }
@@ -60,7 +62,7 @@ Router.post('/registration', function (req, res) {
             newUser.save()
                 .then(user => res.json(user))
                 .catch(err => {
-                    res.send(400).json(errors);
+                    res.send(400).json(error);
                 });
         });
     });

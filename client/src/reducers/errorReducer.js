@@ -1,11 +1,14 @@
 import {
-    GET_ERRORS
+    GET_ERRORS,
+    CLEAR_ERRORS
 } from '../actions/authActions';
 
 const initialState = {};
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case CLEAR_ERRORS:
+            return {};
         case GET_ERRORS:
             return action.payload;
         default:
