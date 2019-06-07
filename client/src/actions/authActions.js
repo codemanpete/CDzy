@@ -14,6 +14,13 @@ export const setCurrentUser = decodedUser => {
     };
 };
 
+export const clearErrors = () => {
+    return {
+        type: RECEIVE_ERRORS,
+        payload: {}
+    };
+};
+
 // registers a user
 export const registerUser = (userData, history) => dispatch => {
     axios

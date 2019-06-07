@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { loginUser, clearErrors } from '../../actions/authActions';
 import classnames from 'classnames';
 
 class Login extends Component {
@@ -10,8 +10,7 @@ class Login extends Component {
         super();
         this.state = {
             email: "",
-            password: "",
-            errors: {}
+            password: ""
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -21,16 +20,12 @@ class Login extends Component {
         if (this.props.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
         }
+        this.props.clearErrors();
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
-        }
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
         }
     }
 
@@ -50,7 +45,7 @@ class Login extends Component {
     }
 
     render() {
-        const { errors } = this.state;
+        const { errors } = this.props;
         return (
             <div className="container">
                 <div style={{ marginTop: "4rem" }} className="row">
@@ -142,12 +137,12 @@ Login.propTypes = {
     errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ auth, errors}) => ({
+const mapStateToProps = ({ auth }) => ({
     auth,
-    errors
+    errors: auth.errors
 });
 
 export default connect(
     mapStateToProps,
-    { loginUser }
+    { loginUser, clearErrors }
 )(withRouter(Login));

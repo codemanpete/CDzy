@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
+import { registerUser, clearErrors } from '../../actions/authActions';
 import classnames from 'classnames';
 
 class Register extends Component {
@@ -22,6 +22,7 @@ class Register extends Component {
         if(this.props.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
         }
+        this.props.clearErrors();
     }
 
     onChange(e) {
@@ -166,10 +167,10 @@ Register.propTypes = {
 
 const mapStateToProps = ({ auth }) => ({
     auth,
-    errors: auth.error
+    errors: auth.errors
 });
 
 export default connect(
     mapStateToProps,
-    { registerUser }
+    { registerUser, clearErrors }
 )(withRouter(Register));
