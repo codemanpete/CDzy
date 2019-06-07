@@ -1,6 +1,6 @@
 import {
     SET_CURRENT_USER,
-    RECEIVE_ERRORS
+    USER_LOADING
 } from '../actions/authActions';
 
 import isEmpty from 'is-empty';
@@ -8,7 +8,7 @@ import isEmpty from 'is-empty';
 const initialState = {
     isAuthenticated: false,
     user: {},
-    errors: {}
+    loading: false
 };
 
 export default function (state = initialState, action) {
@@ -19,10 +19,10 @@ export default function (state = initialState, action) {
                 isAuthenticated: !isEmpty(action.payload),
                     user: action.payload
             };
-        case RECEIVE_ERRORS:
+        case USER_LOADING:
             return {
                 ...state,
-                errors: action.payload
+                loading: true
             };
         default:
             return state;

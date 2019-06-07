@@ -24,6 +24,14 @@ class Register extends Component {
         }
     }
 
+    componenetWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+
     onChange(e) {
         this.setState({
             [e.target.id]: e.target.value
@@ -41,6 +49,10 @@ class Register extends Component {
         };
         
         this.props.registerUser(newUser, this.props.history);
+    }
+
+    renderErrors() {
+
     }
 
     render() {
@@ -164,9 +176,9 @@ Register.propTypes = {
     errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ auth }) => ({
+const mapStateToProps = ({ auth, errors }) => ({
     auth,
-    errors: auth.errors
+    errors
 });
 
 export default connect(
