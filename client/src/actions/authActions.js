@@ -2,10 +2,9 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
 
-export const GET_ERRORS = "GET_ERRORS";
-export const USER_LOADING = "USER_LOADING";
+export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
-export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
 
 
 export const setCurrentUser = decodedUser => {
@@ -21,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
         .post('/api/users/registration', userData)
         .then(res => history.push('/login'))
         .catch(err => dispatch({
-            type: GET_ERRORS,
+            type: RECEIVE_ERRORS,
             payload: err.response.data.error
         }));
 };
@@ -40,16 +39,10 @@ export const loginUser = userData => dispatch => {
         })
         .catch(err =>
             dispatch({
-                type: GET_ERRORS,
+                type: RECEIVE_ERRORS,
                 payload: err.response.data.error
             })
         );
-};
-
-export const setUserLoading = () => {
-    return {
-        type: USER_LOADING
-    };
 };
 
 export const logoutUser = () => dispatch => {
