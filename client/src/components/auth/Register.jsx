@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { registerUser, clearErrors } from '../../actions/authActions';
+
 import classnames from 'classnames';
 
 class Register extends Component {
@@ -165,12 +164,4 @@ Register.propTypes = {
     errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ auth }) => ({
-    auth,
-    errors: auth.errors
-});
-
-export default connect(
-    mapStateToProps,
-    { registerUser, clearErrors }
-)(withRouter(Register));
+export default Register;

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { loginUser, clearErrors } from '../../actions/authActions';
 import classnames from 'classnames';
 
 class Login extends Component {
@@ -137,12 +135,4 @@ Login.propTypes = {
     errors: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ auth }) => ({
-    auth,
-    errors: auth.errors
-});
-
-export default connect(
-    mapStateToProps,
-    { loginUser, clearErrors }
-)(withRouter(Login));
+export default Login;
