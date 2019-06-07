@@ -70,12 +70,14 @@ Router.post('/registration', function (req, res) {
 
 Router.post('/login', (req, res) => {
     const {
-        errors,
+        error,
         isValid
     } = validateLoginInput(req.body);
 
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).json({
+            error
+        });
     }
 
     const {
@@ -87,8 +89,10 @@ Router.post('/login', (req, res) => {
         email
     }).then(user => {
         if (!user) {
-            return res.status(404).json({
-                error: "password or username incorrect"
+            return res.status(400).json({
+                error: {
+                    password: "password or username incorrect"
+                }
             });
         }
 
@@ -114,7 +118,9 @@ Router.post('/login', (req, res) => {
                     );
                 } else {
                     return res.status(400).json({
-                        error: "password or username incorrect"
+                        error: {
+                            password: "password or username incorrect"
+                        }
                     });
                 }
             });
