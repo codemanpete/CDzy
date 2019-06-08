@@ -8,10 +8,7 @@ const validateLoginInput = function (data) {
 
     if (validator.isEmpty(data.email)) {
         error.email = "Email field is required";
-    } else if (!validator.isEmail(data.email)) {
-        error.email = "Email is invalid";
     }
-
     if (validator.isEmpty(data.password)) {
         error.password = "Password field is required";
     }

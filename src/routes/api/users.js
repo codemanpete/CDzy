@@ -86,45 +86,50 @@ Router.post('/login', (req, res) => {
     } = req.body;
 
     User.findOne({
-        email
-    }).then(user => {
-        if (!user) {
-            return res.status(400).json({
-                error: {
-                    password: "password or username incorrect"
-                }
-            });
-        }
+            $or: [{
+                email
+            }, {
+                username: email
+            }]
+        })
+        .then(user => {
+            if (!user) {
+                return res.status(400).json({
+                    error: {
+                        password: "password or username incorrect"
+                    }
+                });
+            }
 
-        bcrypt.compare(password, user.password)
-            .then(isMatch => {
-                if (isMatch) {
-                    const payload = {
-                        id: user.id,
-                        username: user.username
-                    };
+            bcrypt.compare(password, user.password)
+                .then(isMatch => {
+                    if (isMatch) {
+                        const payload = {
+                            id: user.id,
+                            username: user.username
+                        };
 
-                    jwt.sign(
-                        payload,
-                        keys.secretOrKey, {
-                            expiresIn: 300000
-                        },
-                        (err, token) => {
-                            res.json({
-                                success: true,
-                                token: "Bearer " + token
-                            });
-                        }
-                    );
-                } else {
-                    return res.status(400).json({
-                        error: {
-                            password: "password or username incorrect"
-                        }
-                    });
-                }
-            });
-    });
+                        jwt.sign(
+                            payload,
+                            keys.secretOrKey, {
+                                expiresIn: 300000
+                            },
+                            (err, token) => {
+                                res.json({
+                                    success: true,
+                                    token: "Bearer " + token
+                                });
+                            }
+                        );
+                    } else {
+                        return res.status(400).json({
+                            error: {
+                                password: "password or username incorrect"
+                            }
+                        });
+                    }
+                });
+        });
 });
 
 export default Router;
