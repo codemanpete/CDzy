@@ -24,6 +24,16 @@ const UserSchema = new Schema({
     lastSeen: {
         type: Date,
         default: Date.now()
+    },
+    balance: {
+        amount: {
+            type: Schema.Types.Decimal128,
+            default: 1.59
+        },
+        lastClaim: {
+            type: Date,
+            default: Date.now()
+        }
     }
 }, {
     collection: 'Users'

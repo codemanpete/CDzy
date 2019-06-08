@@ -106,7 +106,13 @@ Router.post('/login', (req, res) => {
                     if (isMatch) {
                         const payload = {
                             id: user.id,
-                            username: user.username
+                            username: user.username,
+                            email: user.email,
+                            lastSeen: user.lastSeen,
+                            balance: {
+                                amount: user.balance.amount.toString(),
+                                lastClaim: user.balance.lastClaim
+                            }
                         };
 
                         jwt.sign(
