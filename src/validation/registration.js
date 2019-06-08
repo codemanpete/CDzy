@@ -13,6 +13,8 @@ const validateRegisterInput = function (data) {
     // validator.isEmpty checks if string has length 0.
     if (validator.isEmpty(data.username)) {
         error.username = "Username field is required";
+    } else if (/[@~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(data.username)) {
+        error.username = "Username cannot contain symbols";
     }
 
     if (validator.isEmpty(data.email)) {
