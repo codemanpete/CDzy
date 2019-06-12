@@ -20,23 +20,25 @@ class Topnav extends Component {
                                 CDzy
                             </Link>
                         }
-                        alignLinks="right">
-                        <NavItem href="">
+                        alignLinks="right"
+                        className="indigo accent-3"
+                    >
+                        <NavItem href="/dashboard">
                             Home
                         </NavItem>
-                        <NavItem href="">
+                        <NavItem href="/accounts">
                             Accounts
                         </NavItem>
-                        <NavItem href="">
+                        <NavItem href="/browse">
                             Browse
                         </NavItem>
                         <Dropdown trigger={<Link>{this.props.auth.user.username}<i className="material-icons right">
                             arrow_drop_down
                                         </i></Link>}>
-                            <a href="#">
+                            <a href="/profile">
                                 Profile
                             </a>
-                            <a href="#">
+                            <a href="/settings">
                                 Settings
                             </a>
                             <Divider />
@@ -46,48 +48,6 @@ class Topnav extends Component {
                         </Dropdown>
                     </Navbar>
                 </div>
-                // <div className="navbar-fixed">
-                //     <ul id="dropdown1" className="dropdown-content">
-                //         <li><Link to="#!">Profile</Link></li>
-                //         <li><Link to="#!">Settings</Link></li>
-                //         <li><Link to="#!">Logout</Link></li>
-                //     </ul>
-                //     <nav className="z-depth-0">
-                //         <div className="nav-wrapper indigo accent-3">
-                // <Link
-                //     to="/dashboard"
-                //     style={{
-                //         fontFamily: "monospace"
-                //     }}
-                //     className="brand-logo">
-                //     <i className="material-icons">code</i>
-                //     CDzy
-                //             </Link>
-                //             <ul className="right hide-on-med-and-down">
-                //                 <li>
-                //                     <Link to="/dashboard">Home</Link>
-                //                 </li>
-                //                 <li>
-                //                     <Link to="/accounts">Accounts</Link>
-                //                 </li>
-                //                 <li>
-                //                     <Link to="/browse">Browse</Link>
-                //                 </li>
-                //                 <li>
-                //                     <a href="#!"
-                //                         className="dropdown-trigger"
-                //                         data-target="dropdown1"
-                //                     >
-                //                         {this.props.auth.user.username}
-                // <i className="material-icons right">
-                //     arrow_drop_down
-                //                         </i>
-                //                     </a>
-                //                 </li>
-                //             </ul>
-                //         </div>
-                //     </nav>
-                // </div>
             );
         return null;
     }
