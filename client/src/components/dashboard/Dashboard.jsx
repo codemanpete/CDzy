@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 
 class Dashboard extends Component {
-    onLogoutClick(e) {
-        e.preventDefault();
-        this.props.logoutUser();
-    }
-
     render() {
         const { user } = this.props.auth;
         return (
@@ -21,11 +16,7 @@ class Dashboard extends Component {
                             <b>Hey there,</b>&nbsp;
                             {user.username}
                             <p className="flow-text grey-text text-darken-1">
-                                You are logged into a full-stack&nbsp;
-                                <span style={{
-                                    fontFamily: "monospace"
-                                }}>MERN</span>
-                                &nbsp;app
+                                Your balance is ${ user.balance.amount }
                             </p>
                         </h4>
                         <button
@@ -35,11 +26,10 @@ class Dashboard extends Component {
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem"
                             }}
-                            onClick={this.onLogoutClick.bind(this)}
                             className="btn btn-large waves-effect waves-light
                                 hoverable blue accent-3"
                         >
-                            Logout
+                            Get $15
                         </button>
                     </div>
                 </div>
@@ -59,5 +49,5 @@ const mapStateToProps = ({ auth }) => ({
 
 export default connect(
     mapStateToProps,
-    { logoutUser }
+    {}
 )(Dashboard);

@@ -39,12 +39,12 @@ class Topnav extends Component {
                         </NavItem>
                         <Dropdown
                             trigger={
-                                <Link>
+                                <a>
                                     {this.props.auth.user.username}
                                     <i className="material-icons right">
                                         arrow_drop_down
                                     </i>
-                                </Link>}>
+                                </a>}>
                             <a href="/profile">
                                 Profile
                             </a>
