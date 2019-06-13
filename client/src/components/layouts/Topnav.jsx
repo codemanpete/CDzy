@@ -4,6 +4,11 @@ import { Navbar, NavItem, Dropdown, Divider } from 'react-materialize';
 
 
 class Topnav extends Component {
+    handleLogout(e) {
+        e.preventDefault();
+        this.props.logoutUser();
+    }
+
     render() {
         if (this.props.auth.isAuthenticated)
             return (
@@ -32,9 +37,14 @@ class Topnav extends Component {
                         <NavItem href="/browse">
                             Browse
                         </NavItem>
-                        <Dropdown trigger={<Link>{this.props.auth.user.username}<i className="material-icons right">
-                            arrow_drop_down
-                                        </i></Link>}>
+                        <Dropdown
+                            trigger={
+                                <Link>
+                                    {this.props.auth.user.username}
+                                    <i className="material-icons right">
+                                        arrow_drop_down
+                                    </i>
+                                </Link>}>
                             <a href="/profile">
                                 Profile
                             </a>
@@ -42,7 +52,7 @@ class Topnav extends Component {
                                 Settings
                             </a>
                             <Divider />
-                            <a href="#">
+                            <a onClick={this.handleLogout.bind(this)}>
                                 Logout
                             </a>
                         </Dropdown>
