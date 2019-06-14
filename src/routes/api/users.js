@@ -8,6 +8,41 @@ import validateLoginInput from '../../validation/login';
 
 import User from '../../models/User';
 
+Router.post('/:userid/claim', function (req, res) {
+    User.findById(req.params.userid, function (err, foundUser) {
+
+        if (!foundUser) {
+            res.status(404).json({
+                error: err
+            });
+        }
+
+        let {
+            amount,
+            lastClaim
+        } = foundUser.balance;
+        const hoursToClaim = 1;
+        const claimAmount = 15.0;
+        let msToClaim = hoursToClaim * 60 * 60 * 1000;
+        if (Date.now() - lastClaim < msToClaim) {
+            res.status(400).json({
+                error: {
+                    claim: "Too early to claim"
+                }
+            });
+        }
+
+        foundUser.balance.amount = parseFloat(amount) + claimAmount;
+        foundUser.balance.lastClaim = Date.now();
+        foundUser.save()
+            .then(function (user) {
+                res.status(200).json({
+                    user
+                });
+            });
+    });
+});
+
 Router.post('/registration', function (req, res) {
     const {
         error,
