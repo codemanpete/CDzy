@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../actions/authActions';
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.renderClaimButton = this.renderClaimButton.bind(this);
+    }
+    renderClaimButton() {
+        const { user } = this.props.auth;
+        const now = new Date();
+        const then = new Date(user.balance.lastClaim);
+        if (now - then < 1 * 60 * 60 * 1000) {
+            return (<div>Must wait</div>);
+        }
+        return (<div>Claim $15</div>);
+    }
     render() {
         const { user } = this.props.auth;
         return (
@@ -29,7 +41,7 @@ class Dashboard extends Component {
                             className="btn btn-large waves-effect waves-light
                                 hoverable blue accent-3"
                         >
-                            Get $15
+                            {this.renderClaimButton()}
                         </button>
                     </div>
                 </div>
@@ -39,7 +51,6 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
 };
 

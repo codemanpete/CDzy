@@ -57,3 +57,7 @@ export const logoutUser = () => dispatch => {
     setAuthToken(false);
     dispatch(setCurrentUser({}));
 };
+
+export const claimAllowance = (userid) => dispatch => {
+
+};
