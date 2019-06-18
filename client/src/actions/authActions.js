@@ -59,5 +59,13 @@ export const logoutUser = () => dispatch => {
 };
 
 export const claimAllowance = (userid) => dispatch => {
-
+    axios
+        .post(`/api/users/${userid}/claim`)
+        .then(res => dispatch(setCurrentUser(res.data.user)))
+        .catch(err =>
+            dispatch({
+                type: RECEIVE_ERRORS,
+                payload: err.response.data.error
+            })
+        );
 };

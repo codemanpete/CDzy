@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { claimAllowance } from '../../actions/authActions';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.renderClaimButton = this.renderClaimButton.bind(this);
+        this.handleClaimClick = this.handleClaimClick.bind(this);
     }
     renderClaimButton() {
         const { user } = this.props.auth;
@@ -16,6 +18,12 @@ class Dashboard extends Component {
         }
         return (<div>Claim $15</div>);
     }
+
+    handleClaimClick() {
+        const { user } = this.props.auth;
+        this.props.claimAllowance(user.id);
+    }
+
     render() {
         const { user } = this.props.auth;
         return (
@@ -38,6 +46,7 @@ class Dashboard extends Component {
                                 letterSpacing: "1.5px",
                                 marginTop: "1rem"
                             }}
+                            onClick={this.handleClaimClick}
                             className="btn btn-large waves-effect waves-light
                                 hoverable blue accent-3"
                         >
@@ -60,5 +69,5 @@ const mapStateToProps = ({ auth }) => ({
 
 export default connect(
     mapStateToProps,
-    {}
+    { claimAllowance }
 )(Dashboard);
